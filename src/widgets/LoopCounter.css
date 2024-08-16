@@ -1,0 +1,80 @@
+.LoopCounter{
+  --current-color: blue;
+
+  display: grid;
+  grid-template-rows: 3em 3em 1fr;
+  height: 100%;
+  width: 100%;
+
+  background: var(--current-color);
+  color: hsl(from var(--current-color) h s mod(calc(l + 50), 100) );
+}
+
+.pattern-builder,
+.pattern-options{
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: lightgrey;
+  align-items: center;
+  justify-content: center;
+}
+
+.pattern-node{
+  --node-color: blue;
+  --text-color: hsl(from var(--node-color) h s mod(calc(l + 50), 100) );
+  display: flex;
+  background: var(--node-color);
+  color: var(--text-color);
+  width: 2em;
+  height: 2em;
+  border-radius: 1em 0 0 1em;
+  position: relative;
+  overflow: visible;
+}
+.pattern-node::after{
+  content:"";
+  height: 2em;
+  width: .5em;
+  clip-path:
+    polygon(0 0, 100% 50%,  0 100%);
+  background: var(--node-color);
+  left:99%;
+  position: absolute;
+  z-index: 2;
+}
+.pattern-node > .count{
+  background: none;
+  border: none;
+  color: var(--text-color);
+  width: 1em;
+  font-size: 1.1em;
+  text-align: center;
+  font-weight: bolder;
+  margin: auto;
+}
+.pattern-node > .color{
+  display:none;
+}
+.pattern-node > button{
+  position: absolute;
+  right: -5px;
+  top:-5px;
+  border-radius: 50%;
+  background: red;
+  color:white;
+  font-weight: bolder;
+  border: 1px solid white;
+  z-index: 3;
+}
+
+.pattern-node::after{
+
+}
+
+.display-area{
+  margin: auto;
+  font-size: 3em;
+}
