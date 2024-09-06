@@ -1,0 +1,23 @@
+.ContextMenu{
+  position: absolute;
+  background: #1a1d1f;
+  color: #fff;
+  font-size: .9rem;
+  border-radius: 1em;
+  overflow: hidden;
+  padding: 1em 0;
+}
+.ContextMenu section{
+  border-bottom: 1px solid white;
+}
+.ContextMenu section:last-of-type{
+  border-bottom: none;
+}
+
+.ContextMenu div{
+  cursor:default;
+  padding: .3em 2em;
+}
+.ContextMenu div:hover{
+  background: #545a5e;
+}

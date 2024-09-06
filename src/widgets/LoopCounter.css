@@ -6,7 +6,7 @@
   height: 100%;
   width: 100%;
 
-  background: var(--current-color);
+  background: linear-gradient(45deg, var(--current-color), hsl(from var(--current-color) h s calc(l + 30) ));
   color: hsl(from var(--current-color) h s mod(calc(l + 50), 100) );
 }
 

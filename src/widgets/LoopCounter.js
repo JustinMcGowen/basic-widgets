@@ -20,9 +20,9 @@ const LoopCounter = ({ }) => {
   let patternNodes = []
   pattern.forEach((item, i) => {
     patternNodes.push(
-      <div class='pattern-node' style={{'--node-color':item[1]}} onContextMenu={(ev) => {ev.preventDefault(); setPattern(prevState=> [...prevState.slice(0, i), [item[0], colorOptions[(colorOptions.findIndex((ele) => ele == item[1])+1)%colorOptions.length]], ...prevState.slice(i+1)] )}}>
+      <div class='pattern-node' style={{'--node-color':item[1]}} onContextMenu={(ev) => {ev.preventDefault(); ev.stopPropagation(); setPattern(prevState=> [...prevState.slice(0, i), [item[0], colorOptions[(colorOptions.findIndex((ele) => ele == item[1])+1)%colorOptions.length]], ...prevState.slice(i+1)] )}}>
         <input class='count' type='text' value={item[0]} onChange={(ev) => {
-          setPattern(prevState=> [...prevState.slice(0, i), [parseInt(ev.target.value), item[1]], ...prevState.slice(i+1)] )
+          setPattern(prevState=> [...prevState.slice(0, i), [(parseInt(ev.target.value)||''), item[1]], ...prevState.slice(i+1)] )
         }}/>
         <input class='color' type='text' value={item[1]} onChange={(ev) => {
           setPattern(prevState=> [...prevState.slice(0, i), [item[0], ev.target.value], ...prevState.slice(i+1)] )

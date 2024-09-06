@@ -22,8 +22,6 @@ const LavaLamp = ({ ...props }) => {
   	bubbles.push(bubble);
   }
 
-  console.log(props)
-
   return (
     <div className="LavaLamp" style={{'--color': props.lamp_color}}>
       <div class="Outline">

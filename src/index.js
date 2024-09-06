@@ -28,44 +28,50 @@ const widgets = [
   }
 ]
 
+function loadDivWidget( container, type ){
+  let root = ReactDOM.createRoot( container );
+  root.render(
+    <Widget type={type} {...container.dataset} />
+  )
+}
+
+
+function addDivForIframe(type, params){
+  var iframeDiv = document.createElement('div');
+  iframeDiv.className = type;
+
+  //if we are an iframe, take query parameters and add them as data attributes to the new div. This is how savable params will get read by widget
+  iframeDiv.dataset['is_iframe'] = true;
+  params.forEach((item, key) => {
+    if(!['widget'].includes(key)){
+      iframeDiv.dataset[key] = item;
+    }
+  });
+
+  document.getElementsByTagName('body')[0].appendChild(iframeDiv);
+}
+
+
 function loadWidgets(){
   let params = new URLSearchParams(window.location.search)
   let addWidget = params.has('widget') ? params.get('widget') : '';
 
+  if(addWidget){
+    addDivForIframe(addWidget, params)
+  }
+
   widgets.forEach((widgetType, i) => {
 
     // appends div to body if we have the query parameter of "widget" set - this is when the widget is loaded through an iframe
-    if(addWidget == widgetType['className']){
-      var iDiv = document.createElement('div');
-      // iDiv.id = widgetType['className'];
-      iDiv.className = widgetType['className'];
-
-      //if we are an iframe, take query parameters and add them as data attributes to the new div. This is how savable params will get read by widget
-      params.forEach((item, key) => {
-        if(!['widget'].includes(key)){
-          iDiv.dataset[key] = item;
-        }
-      });
-
-      document.getElementsByTagName('body')[0].appendChild(iDiv);
-    }
-
     let widgetDivs = document.querySelectorAll(`.${widgetType['className']}`);
     widgetDivs.forEach(div => {
-      let root = ReactDOM.createRoot(div);
-      let widget = React.createElement(widgetType['type'], div.dataset)
-      root.render(
-        <Widget {...div.dataset}>
-          {widget}
-        </Widget>
-      )
+      loadDivWidget( div, widgetType['type'] )
     });
   });
 }
 
 document.addEventListener('readystatechange', function() {
   if (document.readyState === 'complete') {
-
     loadWidgets();
   }
 });

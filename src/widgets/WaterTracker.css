@@ -1,21 +1,45 @@
 .WaterTracker{
-  margin: 1em;
   padding: 0;
   height: calc(100% - 2em);
   width: calc(100% - 2em);
   display: grid;
-  grid-template-areas:  'a b'
-                        'a b';
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: .75em;
+  padding: 1em;
 }
-.WaterTracker > h1{
+.WaterTracker > h2{
   padding: 0;
   margin: 0;
+  grid-column: 1/3;
+  align-content: flex-end;
+}
+
+.WaterTracker > .progress > .percent{
+  font-size: 3rem;
+  font-weight: bold;
+}
+.WaterTracker > .progress > .percent > .number{
+  font-size: 4rem;
+}
+.WaterTracker > .progress > .values > .number{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.WaterTracker > .button-row{
+  grid-column: 1/3;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  height: 2em;
 }
 
 .bottle-containter{
-  grid-area: b;
   width: fit-content;
   margin: auto;
+  grid-column: 3/3;
+  grid-row: 1/4;
 }
 
 .WaterTracker .bottle{
@@ -61,9 +85,18 @@
   position: absolute;
   top: max(-9%, min(86%, calc(86% - (var(--complete) * .95))));
   transition: top .5s;
-  animation:float 3s linear infinite normal;
+  animation:slosh 3s linear infinite normal;
 }
-@keyframes float {
+.WaterTracker .bottle svg{
+  position: absolute;
+  height: 3em;
+  top: max(-9%, min(78%, calc(78% - (var(--complete) * .87))));
+  transition: top .5s;
+  animation:bob 9s ease-in-out infinite normal,
+  float 9s linear infinite normal,
+  onlyX 630s linear infinite normal;
+}
+@keyframes slosh {
   0%{
     left:0;
     transform:translateY(0px);
@@ -73,4 +106,21 @@
     left:-82%;
     transform:translateY(0px);
   }
+}
+@keyframes bob {
+  0%{transform:rotate(20deg) translateY(0px);}
+  25%{transform:rotate(-20deg) translateY(0px);}
+  50%{transform:rotate(20deg) translateY(-8px);}
+  75%{transform:rotate(-20deg) translateY(0px);}
+  100%{transform:rotate(20deg) translateY(0px);}
+}
+@keyframes float {
+  0%{left:100%}
+  100%{left:-40%}
+}
+@keyframes onlyX{
+  0%{opacity: 0}
+  98.57%{opacity: 0}
+  98.571%{opacity: 1}
+  100%{opacity: 1}
 }
